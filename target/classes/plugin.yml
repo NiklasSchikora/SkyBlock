@@ -1,10 +1,11 @@
 name: SkyBlock
 version: 1.0
 authors: [Cheftoaster, Monty]
+depend: [WorldGuard, WorldEdit]
 
 main: net.MyCliff.SkyBlock.Main
 
 commands:
-  insel
-    description: Insel-Befehl
+  insel:
+    description: island command
     aliases: [is, island]
