@@ -1,0 +1,10 @@
+name: SkyBlock
+version: 1.0
+authors: [Cheftoaster, Monty]
+
+main: net.MyCliff.SkyBlock.Main
+
+commands:
+  insel
+    description: Insel-Befehl
+    aliases: [is, island]
