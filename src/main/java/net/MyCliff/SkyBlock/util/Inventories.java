@@ -14,7 +14,7 @@ public class Inventories {
 
 
     public static Inventory startInv() {
-        Inventory inv = Bukkit.createInventory(null, 9, "");
+        Inventory inv = Bukkit.createInventory(null, 9, "§eSkyBlock");
         ItemStack item;
         ItemMeta meta;
         List<String> lore = new ArrayList<String>();

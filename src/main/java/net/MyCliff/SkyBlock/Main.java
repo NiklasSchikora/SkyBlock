@@ -3,9 +3,13 @@ package net.MyCliff.SkyBlock;
 import java.lang.reflect.Field;
 
 import net.MyCliff.SkyBlock.commands.CommandIsland;
+import net.MyCliff.SkyBlock.listener.InventoryClickManager;
 import net.MyCliff.SkyBlock.util.Messages;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -27,6 +31,8 @@ public class Main extends JavaPlugin {
         System.out.println("SkyBlock version v"
                 + this.getDescription().getVersion() + " by "
                 + this.getDescription().getAuthors() + " enabled!");
+        registerCommands();
+        registerListener();
     }
 
     public Main getInstance() {
@@ -70,7 +76,8 @@ public class Main extends JavaPlugin {
     }
 
     public void registerListener() {
-
+        PluginManager pm = Bukkit.getPluginManager();
+        pm.registerEvents(new InventoryClickManager(), this);
     }
 
 
