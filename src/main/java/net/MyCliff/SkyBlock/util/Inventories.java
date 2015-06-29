@@ -54,6 +54,12 @@ public class Inventories {
 
     public static Inventory islandMenue(Player p) {
         Inventory inv = Bukkit.createInventory(null, 18, p.getName() + "'s Insel");
+        ItemStack item;
+        ItemMeta meta;
+        List<String> lore = new ArrayList<String>();
+
+
+
 
 
 
