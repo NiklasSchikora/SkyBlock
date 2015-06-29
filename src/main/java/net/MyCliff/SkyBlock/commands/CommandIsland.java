@@ -24,12 +24,8 @@ public class CommandIsland implements CommandExecutor{
                 if(!IslandManager.hasIsland(uuid)) {
                     p.openInventory(Inventories.startInv());
                 } else {
-
+                    p.openInventory(Inventories.islandMenue(p));
                 }
-
-
-
-
             } else {
                 p.sendMessage(Messages.prefix + Messages.noperm);
             }

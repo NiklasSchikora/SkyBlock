@@ -14,7 +14,14 @@ public class Inventories {
 
 
     public static Inventory startInv() {
-        Inventory inv = Bukkit.createInventory(null, 9, "§eSkyBlock");
+        Inventory inv = Bukkit.createInventory(null, 27, "§eSkyBlock");
+        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE,1 ,(short) 15);
+        ItemMeta glassItemMeta = glass.getItemMeta();
+        glassItemMeta.setDisplayName(" ");
+        glass.setItemMeta(glassItemMeta);
+        for(int i = 0; i< 27; i++) {
+            inv.setItem(i, glass);
+        }
         ItemStack item;
         ItemMeta meta;
         List<String> lore = new ArrayList<String>();
@@ -26,7 +33,7 @@ public class Inventories {
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
-        inv.setItem(0, item);
+        inv.setItem(10, item);
 
         item = new ItemStack(Material.SAPLING);
         meta = item.getItemMeta();
@@ -36,7 +43,7 @@ public class Inventories {
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
-        inv.setItem(4, item);
+        inv.setItem(13, item);
 
         item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         meta = item.getItemMeta();
@@ -46,7 +53,7 @@ public class Inventories {
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
-        inv.setItem(8, item);
+        inv.setItem(16, item);
 
         return inv;
     }

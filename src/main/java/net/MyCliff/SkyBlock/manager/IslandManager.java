@@ -80,7 +80,7 @@ public class IslandManager {
         region.setOwners(owners);
         region.setParent(getWorldGuard().getRegionManager(getSkyWorld()).getRegion("__Global__"));
         region.setPriority(100);
-        region.setFlag(DefaultFlag.GREET_MESSAGE, DefaultFlag.GREET_MESSAGE.parseInput(getWorldGuard(), p, "§9System §7• Du betrittst nun die Insel von §f" + p.getName()));
+        region.setFlag(DefaultFlag.GREET_MESSAGE, DefaultFlag.GREET_MESSAGE.parseInput(getWorldGuard(), p, "§9System §7• Du betrittst +nun die Insel von §f" + p.getName()));
         region.setFlag(DefaultFlag.FAREWELL_MESSAGE, DefaultFlag.FAREWELL_MESSAGE.parseInput(getWorldGuard(), p, "§9System §7• Du verlässt nun die Insel von §f" + p.getName()));
         region.setFlag(DefaultFlag.PVP, DefaultFlag.PVP.parseInput(getWorldGuard(), p, "deny"));
         region.setFlag(DefaultFlag.CHEST_ACCESS, DefaultFlag.CHEST_ACCESS.parseInput(getWorldGuard(), p, "deny"));
