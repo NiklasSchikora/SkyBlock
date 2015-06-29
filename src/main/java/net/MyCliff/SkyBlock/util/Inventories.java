@@ -22,7 +22,7 @@ public class Inventories {
         meta = item.getItemMeta();
         meta.setDisplayName("§eWas ist SkyBlock?");
         lore.add("§f§l> §fHier erfährst du, um was es in SkyBlock geht");
-        lore.add("und was deine Ziele sind.");
+        lore.add("§fund was deine Ziele sind.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -32,7 +32,7 @@ public class Inventories {
         meta = item.getItemMeta();
         meta.setDisplayName("§eStarte dein eigenes Abenteuer!");
         lore.add("§f§l> §fErstelle deine eigene Insel und");
-        lore.add("stelle dich dem Abenteuer!");
+        lore.add("§fstelle dich dem Abenteuer!");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -42,7 +42,7 @@ public class Inventories {
         meta = item.getItemMeta();
         meta.setDisplayName("§eSpiele mit Freunden!");
         lore.add("§f§l> §fKlicke auf dieses Item,");
-        lore.add("um mehr Informationen zu bekommen.");
+        lore.add("§fum mehr Informationen zu bekommen.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -57,7 +57,15 @@ public class Inventories {
         ItemStack item;
         ItemMeta meta;
         List<String> lore = new ArrayList<String>();
-
+        item = new ItemStack(Material.BED);
+        meta = item.getItemMeta();
+        meta.setDisplayName("§eNach Hause");
+        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
+        lore.add("§fkommst du zurück auf deine Insel.");
+        meta.setLore(lore);
+        lore.clear();
+        item.setItemMeta(meta);
+        inv.setItem(0, item);
 
 
 
