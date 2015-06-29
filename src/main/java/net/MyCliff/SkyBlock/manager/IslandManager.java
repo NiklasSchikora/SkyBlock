@@ -21,21 +21,27 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class IslandManager {
 
 	
 	/*
-	 * plugins/SkyBlock/Islands
-	 * plugins/SkyBlock/players.yml
-	 *
-	 * 
+	 * Created by Niklas Schikora on 29.06.2015
 	 */
+
+
+    public static File config = new File("plugins/SkyBlock/Files", "config.yml");
+    public static FileConfiguration configc = YamlConfiguration.loadConfiguration(config);
 
     public static void pasteIsland(Location loc) {
         File shematic = new File("plugins/SkyBlock", "Island.shematic");
@@ -99,9 +105,7 @@ public class IslandManager {
     }
 
     public static World getSkyWorld() {
-        File config = new File("plugins/SkyBlock", "config.yml");
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(config);
-        World w = Bukkit.getWorld(cfg.getString("Skyworld"));
+        World w = Bukkit.getWorld(configc.getString("Skyworld"));
         return w;
     }
 
@@ -122,6 +126,38 @@ public class IslandManager {
         return false;
     }
 
+
+    public static void setChest(Location loc, Player player) {
+        for (int x = -15; x <= 15; x++) {
+            for (int y = -15; y <= 15; y++) {
+                for (int z = -15; z <= 15; z++) {
+                    if (getSkyWorld().getBlockAt(loc.getBlockX() + x, loc.getBlockY() + y, loc.getBlockZ() + z).getTypeId() == 54) {
+                        Block blockToChange = getSkyWorld().getBlockAt(loc.getBlockX() + x, loc.getBlockY() + y, loc.getBlockZ() + z);
+                        Chest chest = (Chest) blockToChange.getState();
+                        Inventory inventory = chest.getInventory();
+                        inventory.clear();
+                        inventory.setItem(0, new ItemStack(Material.ICE, 2));
+                        inventory.setItem(1, new ItemStack(Material.LAVA_BUCKET));
+                        inventory.setItem(26, new ItemStack(Material.CACTUS));
+                        inventory.setItem(8, new ItemStack(Material.PUMPKIN_SEEDS));
+                        inventory.setItem(17, new ItemStack(Material.MELON));
+                        inventory.setItem(16, new ItemStack(Material.SUGAR_CANE));
+                        inventory.setItem(6, new ItemStack(Material.RED_MUSHROOM));
+                        inventory.setItem(7, new ItemStack(Material.BROWN_MUSHROOM));
+                        inventory.setItem(18, new ItemStack(Material.WOOD_SWORD));
+                        inventory.setItem(19, new ItemStack(Material.WOOD_PICKAXE));
+                        inventory.setItem(20, new ItemStack(Material.WOOD_AXE));
+                        inventory.setItem(21, new ItemStack(Material.WOOD_SPADE));
+                        inventory.setItem(9, new ItemStack(Material.LEATHER_HELMET));
+                        inventory.setItem(10, new ItemStack(Material.LEATHER_CHESTPLATE));
+                        inventory.setItem(11, new ItemStack(Material.LEATHER_LEGGINGS));
+                        inventory.setItem(12, new ItemStack(Material.LEATHER_BOOTS));
+                        inventory.setItem(25, new ItemStack(Material.BONE));
+                    }
+                }
+            }
+        }
+    }
 
 
 
