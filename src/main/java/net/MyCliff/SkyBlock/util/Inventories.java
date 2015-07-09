@@ -34,7 +34,6 @@ public class Inventories {
         lore.clear();
         item.setItemMeta(meta);
         inv.setItem(10, item);
-        System.out.println("Lalalala");
 
         item = new ItemStack(Material.SAPLING);
         meta = item.getItemMeta();
