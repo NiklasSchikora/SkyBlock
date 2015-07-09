@@ -64,6 +64,7 @@ public class Inventories {
         ItemStack item;
         ItemMeta meta;
         List<String> lore = new ArrayList<String>();
+        //1 Item - Nach Hause
         item = new ItemStack(Material.BED);
         meta = item.getItemMeta();
         meta.setDisplayName("§eNach Hause");
@@ -73,6 +74,47 @@ public class Inventories {
         lore.clear();
         item.setItemMeta(meta);
         inv.setItem(0, item);
+        //2 Item - Zum Shop
+        item = new ItemStack(Material.CHEST);
+        meta = item.getItemMeta();
+        meta.setDisplayName("§eZum Shop");
+        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
+        lore.add("§fkommst du zum SkyBlock-Shop.");
+        meta.setLore(lore);
+        lore.clear();
+        item.setItemMeta(meta);
+        inv.setItem(1, item);
+        //3 Item - Mitspieler
+        item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        meta = item.getItemMeta();
+        meta.setDisplayName("§eMitspieler");
+        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
+        lore.add("§fbekommst du all deine Mitspieler angezeigt.");
+        meta.setLore(lore);
+        lore.clear();
+        item.setItemMeta(meta);
+        inv.setItem(2, item);
+        //4 Item - Challenges
+        item = new ItemStack(Material.BOOK);
+        meta = item.getItemMeta();
+        meta.setDisplayName("§eChallenges");
+        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
+        lore.add("§fbekommst du alle möglichen Challenges aufgelistet.");
+        meta.setLore(lore);
+        lore.clear();
+        item.setItemMeta(meta);
+        inv.setItem(3, item);
+        //5 Item - Biome
+        item = new ItemStack(Material.SAPLING);
+        meta = item.getItemMeta();
+        meta.setDisplayName("§eBiome");
+        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
+        lore.add("§fkommst du zu einer Auswahl von Biomen,");
+        lore.add("§fdie du für deine Insel definieren kannst.");
+        meta.setLore(lore);
+        lore.clear();
+        item.setItemMeta(meta);
+        inv.setItem(4, item);
 
 
 
