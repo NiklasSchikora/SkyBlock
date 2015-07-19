@@ -11,9 +11,9 @@ import org.bukkit.entity.Villager;
 public class Villagers {
 
 
-    public static void spawnTestVillager(String name, Location loc) {
+    public static void spawnVillager(String name, Location loc) {
         Villager villager = (Villager) loc.getWorld().spawnCreature(loc, CreatureType.VILLAGER);
-        villager.setCustomName("Test");
+        villager.setCustomName("Schmied");
         villager.setCustomNameVisible(true);
         villager.setAdult();
     }

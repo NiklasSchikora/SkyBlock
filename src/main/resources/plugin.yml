@@ -9,3 +9,10 @@ commands:
   insel:
     description: island command
     aliases: [is, island]
+
+  villager:
+    description: villager command
+
+  version:
+    description: SkyBlock version
+    aliases: [sversion, sv, skyblockversion]

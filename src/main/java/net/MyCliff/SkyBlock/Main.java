@@ -1,11 +1,15 @@
 package net.MyCliff.SkyBlock;
 
+import java.io.File;
 import java.lang.reflect.Field;
 
 import net.MyCliff.SkyBlock.commands.CommandIsland;
+import net.MyCliff.SkyBlock.commands.CommandVersion;
+import net.MyCliff.SkyBlock.commands.CommandVillager;
 import net.MyCliff.SkyBlock.listener.InventoryClickManager;
 import net.MyCliff.SkyBlock.util.Messages;
 
+import net.MyCliff.SkyBlock.villagershop.VillagerHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
@@ -33,6 +37,13 @@ public class Main extends JavaPlugin {
                 + this.getDescription().getAuthors() + " enabled!");
         registerCommands();
         registerListener();
+        loadConfig();
+        if(Main.shematicLoaded()) {
+            System.out.println("Shematic Loaded!");
+        } else {
+            System.out.println("Shematic missing! Insert at plugins/SkyBlock with name Island.shematic");
+        }
+
     }
 
     public Main getInstance() {
@@ -73,11 +84,23 @@ public class Main extends JavaPlugin {
 
     public void registerCommands() {
         this.getCommand("insel").setExecutor(new CommandIsland());
+        this.getCommand("villager").setExecutor(new CommandVillager());
+        this.getCommand("version").setExecutor(new CommandVersion());
     }
 
     public void registerListener() {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new InventoryClickManager(), this);
+        pm.registerEvents(new VillagerHandler(), this);
+    }
+
+
+    public static boolean shematicLoaded() {
+        File file = new File("plugins/SkyBlock", "players.yml");
+        if(file != null) {
+            return true;
+        }
+        return false;
     }
 
 

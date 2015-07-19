@@ -75,7 +75,7 @@ public class IslandManager {
     {
         ProtectedRegion region = null;
         DefaultDomain owners = new DefaultDomain();
-        region = new ProtectedCuboidRegion(p.getName() + "Island", getProtectionVectorLeft(island), getProtectionVectorRight(island));
+        region = new ProtectedCuboidRegion(p.getUniqueId().toString() + "Island", getProtectionVectorLeft(island), getProtectionVectorRight(island));
         owners.addPlayer(p.getName());
         region.setOwners(owners);
         region.setParent(getWorldGuard().getRegionManager(getSkyWorld()).getRegion("__Global__"));
@@ -157,6 +157,28 @@ public class IslandManager {
                 }
             }
         }
+    }
+
+
+    public static void addIslandConfiguration(String uuid) {
+        File file = new File("plugins/SkyBlock", "players.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+        if(cfg.contains(uuid)) {
+            cfg.set(uuid, uuid+ "Island");
+            try {
+                cfg.save(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error: UUID already Exists!");
+        }
+        File island = new File("plugins/SkyBlock/Islands", uuid + "Island.yml");
+        FileConfiguration islandConfig = YamlConfiguration.loadConfiguration(island);
+
+
+
     }
 
 
