@@ -44,12 +44,12 @@ public class IslandManager {
     public static FileConfiguration configc = YamlConfiguration.loadConfiguration(config);
 
     public static void pasteIsland(Location loc) {
-        File shematic = new File("plugins/SkyBlock", "Island.shematic");
-        if(!shematic.exists()) {
+        File shematic = new File("plugins/SkyBlock", "Island.schematic");
+        if(shematic.exists()) {
             WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
             EditSession session = wep.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(loc.getWorld()), 1000000);
             try {
-                MCEditSchematicFormat.getFormat(shematic).load(shematic).paste(session, new Vector(0, 200, 0), false);
+                MCEditSchematicFormat.getFormat(shematic).load(shematic).paste(session, new Vector(0, 40, 0), false);
             } catch (MaxChangedBlocksException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -127,6 +127,49 @@ public class IslandManager {
     }
 
 
+    public static void addConfigDefaults() {
+        if(!config.exists()) {
+            try {
+                config.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        configc.addDefault("Config.Version", "1.0.1");
+        configc.addDefault("NextIs.X", 0);
+        configc.addDefault("NextIs.Y", 40);
+        configc.addDefault("NextIs.Z", 0);
+        configc.addDefault("Skyworld", "Skyworld");
+        configc.options().copyDefaults(true);
+        try {
+            configc.save(config);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateNextIs() {
+        double x = configc.getDouble("NextIs.X");
+        double z = configc.getDouble("NextIs.Z");
+        configc.set("NextIs.X", x + 200);
+        configc.set("NextIs.Z", z + 200);
+        try {
+            configc.save(config);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Location getNextIsland() {
+        Location loc = null;
+        double x = configc.getDouble("NextIs.X");
+        double y = configc.getDouble("NextIs.Y");
+        double z = configc.getDouble("NextIs.Z");
+        loc = new Location(getSkyWorld(), x, y, z);
+        return loc;
+    }
+
+
     public static void setChest(Location loc, Player player) {
         for (int x = -15; x <= 15; x++) {
             for (int y = -15; y <= 15; y++) {
@@ -160,25 +203,52 @@ public class IslandManager {
     }
 
 
-    public static void addIslandConfiguration(String uuid) {
+    public static void addIslandConfiguration(Player p) {
         File file = new File("plugins/SkyBlock", "players.yml");
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-
-        if(cfg.contains(uuid)) {
-            cfg.set(uuid, uuid+ "Island");
-            try {
-                cfg.save(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Error: UUID already Exists!");
-        }
-        File island = new File("plugins/SkyBlock/Islands", uuid + "Island.yml");
+        File island = new File("plugins/SkyBlock/Islands", p.getUniqueId().toString() + "Island.yml");
         FileConfiguration islandConfig = YamlConfiguration.loadConfiguration(island);
+        islandConfig.addDefault("Island.Level", 0);
+        islandConfig.addDefault("Island.Owner", p.getUniqueId().toString());
+        islandConfig.addDefault("Island.Members", null);
+        islandConfig.addDefault("Island.Spawn.X", Double.valueOf(getNextIsland().getX()));
+        islandConfig.addDefault("Island.Spawn.Y", 40);
+        islandConfig.addDefault("Island.Spawn.Z", Double.valueOf(getNextIsland().getZ()));
+        islandConfig.addDefault("Island.Spawn.Yaw", p.getLocation().getYaw());
+        islandConfig.addDefault("Island.Spawn.Pitch", p.getLocation().getPitch());
+        islandConfig.options().copyDefaults(true);
+        try {
+            islandConfig.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
+    public static Location getIslandLocation(String uuid) {
+        Location loc = null;
+        File file = new File("plugins/SkyBlock/Islands", uuid + "Island.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        double x = cfg.getDouble("Island.Spawn.X");
+        double y = cfg.getDouble("Island.Spawn.Y");
+        double z = cfg.getDouble("Island.Spawn.Z");
+        float yaw = cfg.getLong("Island.Spawn.Yaw");
+        float pitch = cfg.getLong("Island.Spawn.Pitch");
+        loc = new Location(getSkyWorld(),x,y ,z , yaw, pitch);
+        return loc;
+    }
 
+    public static Location getIslandHome(String uuid) {
+        Location loc = null;
+        File file = new File("plugins/SkyBlock/Islands", uuid + "Island.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        double x = cfg.getDouble("Island.Home.X");
+        double y = cfg.getDouble("Island.Home.Y");
+        double z = cfg.getDouble("Island.Home.Z");
+        float yaw = cfg.getLong("Island.Home.Yaw");
+        float pitch = cfg.getLong("Island.Home.Pitch");
+        loc = new Location(getSkyWorld(),x,y ,z , yaw, pitch);
+        return loc;
     }
 
 

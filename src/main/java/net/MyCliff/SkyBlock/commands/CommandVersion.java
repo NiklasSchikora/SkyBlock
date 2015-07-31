@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
  */
 public class CommandVersion implements CommandExecutor {
 
-    @Override
+
     public boolean onCommand(CommandSender cs, Command cmd, String s, String[] args) {
         if(cs instanceof Player) {
             Player p = (Player) cs;

@@ -7,6 +7,7 @@ import net.MyCliff.SkyBlock.commands.CommandIsland;
 import net.MyCliff.SkyBlock.commands.CommandVersion;
 import net.MyCliff.SkyBlock.commands.CommandVillager;
 import net.MyCliff.SkyBlock.listener.InventoryClickManager;
+import net.MyCliff.SkyBlock.manager.IslandManager;
 import net.MyCliff.SkyBlock.util.Messages;
 
 import net.MyCliff.SkyBlock.villagershop.VillagerHandler;
@@ -38,11 +39,7 @@ public class Main extends JavaPlugin {
         registerCommands();
         registerListener();
         loadConfig();
-        if(Main.shematicLoaded()) {
-            System.out.println("Shematic Loaded!");
-        } else {
-            System.out.println("Shematic missing! Insert at plugins/SkyBlock with name Island.shematic");
-        }
+        IslandManager.addConfigDefaults();
 
     }
 
@@ -95,13 +92,6 @@ public class Main extends JavaPlugin {
     }
 
 
-    public static boolean shematicLoaded() {
-        File file = new File("plugins/SkyBlock", "players.yml");
-        if(file != null) {
-            return true;
-        }
-        return false;
-    }
 
 
 }
