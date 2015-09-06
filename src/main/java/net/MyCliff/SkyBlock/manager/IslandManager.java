@@ -2,6 +2,8 @@ package net.MyCliff.SkyBlock.manager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.EditSession;
@@ -49,7 +51,7 @@ public class IslandManager {
             WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
             EditSession session = wep.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(loc.getWorld()), 1000000);
             try {
-                MCEditSchematicFormat.getFormat(shematic).load(shematic).paste(session, new Vector(0, 40, 0), false);
+                MCEditSchematicFormat.getFormat(shematic).load(shematic).paste(session, new Vector(getNextIsX(), 40, getNextIsZ()), false);
             } catch (MaxChangedBlocksException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -80,8 +82,8 @@ public class IslandManager {
         region.setOwners(owners);
         region.setParent(getWorldGuard().getRegionManager(getSkyWorld()).getRegion("__Global__"));
         region.setPriority(100);
-        region.setFlag(DefaultFlag.GREET_MESSAGE, DefaultFlag.GREET_MESSAGE.parseInput(getWorldGuard(), p, "§9System §7• Du betrittst +nun die Insel von §f" + p.getName()));
-        region.setFlag(DefaultFlag.FAREWELL_MESSAGE, DefaultFlag.FAREWELL_MESSAGE.parseInput(getWorldGuard(), p, "§9System §7• Du verlässt nun die Insel von §f" + p.getName()));
+        region.setFlag(DefaultFlag.GREET_MESSAGE, DefaultFlag.GREET_MESSAGE.parseInput(getWorldGuard(), p, "Â§9System Â§7â€¢ Du betrittst nun die Insel von Â§f" + p.getName()));
+        region.setFlag(DefaultFlag.FAREWELL_MESSAGE, DefaultFlag.FAREWELL_MESSAGE.parseInput(getWorldGuard(), p, "Â§9System Â§7â€¢ Du verlÃ¤sst nun die Insel von Â§f" + p.getName()));
         region.setFlag(DefaultFlag.PVP, DefaultFlag.PVP.parseInput(getWorldGuard(), p, "deny"));
         region.setFlag(DefaultFlag.CHEST_ACCESS, DefaultFlag.CHEST_ACCESS.parseInput(getWorldGuard(), p, "deny"));
         region.setFlag(DefaultFlag.USE, DefaultFlag.USE.parseInput(getWorldGuard(), p, "deny"));
@@ -103,6 +105,56 @@ public class IslandManager {
             e.printStackTrace();
         }
     }
+
+    public static void addPlayerToRegion(String owner, String member) {
+        ProtectedRegion region = getWorldGuard().getRegionManager(getSkyWorld()).getRegion(owner + "Island");
+        region.getOwners().addPlayer(member);
+    }
+
+    public static void removePlayerFromRegion(String owner, String  member) {
+        ProtectedRegion region = getWorldGuard().getRegionManager(getSkyWorld()).getRegion(owner + "Island");
+        region.getOwners().addPlayer(member);
+    }
+
+    public static void addPlayerToIslandConfig(String owner, String member) {
+        File file = new File("plugins/SkyBlock/Islands", owner + "Island.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        List<String> members = cfg.getStringList("Island.Members");
+        members.add(member);
+        cfg.set("Island.Members", members);
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addPlayerToPlayerdata(String uuid, String owner) {
+        File file = new  File("plugins/SkyBlock", "players.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        if(!cfg.contains(uuid)) {
+            cfg.set(uuid, owner + "Island");
+            try {
+                cfg.save(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void removePlayerToRegionConfig(String owner, String member) {
+        File file = new File("plugins/SkyBlock/Islands", owner + "Island.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        List<String> members = cfg.getStringList("Island.Members");
+        members.remove(member);
+        cfg.set("Island.Members", members);
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static World getSkyWorld() {
         World w = Bukkit.getWorld(configc.getString("Skyworld"));
@@ -169,6 +221,15 @@ public class IslandManager {
         return loc;
     }
 
+    public static double getNextIsX() {
+        return configc.getDouble("NextIs.X");
+    }
+
+    public static double getNextIsZ() {
+        return configc.getDouble("NextIs.Z");
+    }
+
+
 
     public static void setChest(Location loc, Player player) {
         for (int x = -15; x <= 15; x++) {
@@ -203,22 +264,34 @@ public class IslandManager {
     }
 
 
-    public static void addIslandConfiguration(Player p) {
+    public static void updatePlayers(String uuid) {
         File file = new File("plugins/SkyBlock", "players.yml");
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-        File island = new File("plugins/SkyBlock/Islands", p.getUniqueId().toString() + "Island.yml");
+        cfg.set(uuid, uuid + "Island");
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addIslandConfiguration(String uuid) {
+        File island = new File("plugins/SkyBlock/Islands", uuid + "Island.yml");
         FileConfiguration islandConfig = YamlConfiguration.loadConfiguration(island);
         islandConfig.addDefault("Island.Level", 0);
-        islandConfig.addDefault("Island.Owner", p.getUniqueId().toString());
+        islandConfig.addDefault("Island.Owner", uuid);
         islandConfig.addDefault("Island.Members", null);
         islandConfig.addDefault("Island.Spawn.X", Double.valueOf(getNextIsland().getX()));
         islandConfig.addDefault("Island.Spawn.Y", 40);
         islandConfig.addDefault("Island.Spawn.Z", Double.valueOf(getNextIsland().getZ()));
-        islandConfig.addDefault("Island.Spawn.Yaw", p.getLocation().getYaw());
-        islandConfig.addDefault("Island.Spawn.Pitch", p.getLocation().getPitch());
+        islandConfig.addDefault("Island.Home.X", Double.valueOf(getNextIsland().getX()));
+        islandConfig.addDefault("Island.Home.Y", 40);
+        islandConfig.addDefault("Island.Home.Z", Double.valueOf(getNextIsland().getZ()));
+        islandConfig.addDefault("Island.Home.Yaw", getNextIsland().getYaw());
+        islandConfig.addDefault("Island.Home.Pitch", getNextIsland().getPitch());
         islandConfig.options().copyDefaults(true);
         try {
-            islandConfig.save(file);
+            islandConfig.save(island);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -251,6 +324,39 @@ public class IslandManager {
         return loc;
     }
 
+
+
+    public static boolean isInOwnRegion(Player p) {
+        String uuid = p.getUniqueId().toString();
+        if(p.getWorld().getName().equalsIgnoreCase("Skyworld")) {
+            ApplicableRegionSet ar = getWorldGuard().getRegionManager(p.getWorld()).getApplicableRegions(p.getLocation());
+            Iterator<ProtectedRegion> prs = ar.iterator();
+            while(prs.hasNext()) {
+                ProtectedRegion pr = prs.next();
+                if(pr.getId().equalsIgnoreCase(uuid + "island")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public static String getIsland(String uuid) {
+        File players = new File("plugins/SkyBlock", "players.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(players);
+        return cfg.getString(uuid);
+    }
+
+    public static boolean isOwner(String uuid) {
+        File file = new File("plugins/SkyBlock/Islands", uuid + "Island.yml");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        String owner = cfg.getString("Island.Owner");
+        if(owner.equals(uuid)) {
+            return true;
+        }
+        return false;
+    }
 
 
 }

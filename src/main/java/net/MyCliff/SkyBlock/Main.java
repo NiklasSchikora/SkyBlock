@@ -3,6 +3,7 @@ package net.MyCliff.SkyBlock;
 import java.io.File;
 import java.lang.reflect.Field;
 
+import net.MyCliff.SkyBlock.commands.CommandFly;
 import net.MyCliff.SkyBlock.commands.CommandIsland;
 import net.MyCliff.SkyBlock.commands.CommandVersion;
 import net.MyCliff.SkyBlock.commands.CommandVillager;
@@ -83,6 +84,7 @@ public class Main extends JavaPlugin {
         this.getCommand("insel").setExecutor(new CommandIsland());
         this.getCommand("villager").setExecutor(new CommandVillager());
         this.getCommand("version").setExecutor(new CommandVersion());
+        this.getCommand("fly").setExecutor(new CommandFly());
     }
 
     public void registerListener() {

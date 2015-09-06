@@ -14,7 +14,7 @@ public class Inventories {
 
 
     public static Inventory startInv() {
-        Inventory inv = Bukkit.createInventory(null, 27, "§eSkyBlock");
+        Inventory inv = Bukkit.createInventory(null, 27, "Â§eSkyBlock");
         ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE,1 ,(short) 15);
         ItemMeta glassItemMeta = glass.getItemMeta();
         glassItemMeta.setDisplayName(" ");
@@ -27,9 +27,9 @@ public class Inventories {
         List<String> lore = new ArrayList<String>();
         item = new ItemStack(Material.BOOK);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eWas ist SkyBlock?");
-        lore.add("§f§l> §fHier erfährst du, um was es in SkyBlock geht");
-        lore.add("§fund was deine Ziele sind.");
+        meta.setDisplayName("Â§eWas ist SkyBlock?");
+        lore.add("Â§fÂ§l> Â§fHier erfÃ¤hrst du, um was es in SkyBlock geht");
+        lore.add("Â§fund was deine Ziele sind.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -37,9 +37,9 @@ public class Inventories {
 
         item = new ItemStack(Material.SAPLING);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eStarte dein eigenes Abenteuer!");
-        lore.add("§f§l> §fErstelle deine eigene Insel und");
-        lore.add("§fstelle dich dem Abenteuer!");
+        meta.setDisplayName("Â§eStarte dein eigenes Abenteuer!");
+        lore.add("Â§fÂ§l> Â§fErstelle deine eigene Insel und");
+        lore.add("Â§fstelle dich dem Abenteuer!");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -47,9 +47,9 @@ public class Inventories {
 
         item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eSpiele mit Freunden!");
-        lore.add("§f§l> §fKlicke auf dieses Item,");
-        lore.add("§fum mehr Informationen zu bekommen.");
+        meta.setDisplayName("Â§eSpiele mit Freunden!");
+        lore.add("Â§fÂ§l> Â§fKlicke auf dieses Item,");
+        lore.add("Â§fum mehr Informationen zu bekommen.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -60,16 +60,16 @@ public class Inventories {
 
 
     public static Inventory islandMenue(Player p) {
-        Inventory inv = Bukkit.createInventory(null, 18, p.getName() + "'s Insel");
+        Inventory inv = Bukkit.createInventory(null, 18, "Insel-MenÃ¼");
         ItemStack item;
         ItemMeta meta;
         List<String> lore = new ArrayList<String>();
         //1 Item - Nach Hause
         item = new ItemStack(Material.BED);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eNach Hause");
-        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
-        lore.add("§fkommst du zurück auf deine Insel.");
+        meta.setDisplayName("Â§eNach Hause");
+        lore.add("Â§fÂ§l> Â§fWenn du auf diesen Gegenstand klickst,");
+        lore.add("Â§fkommst du zurÃ¼ck auf deine Insel.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -77,9 +77,9 @@ public class Inventories {
         //2 Item - Zum Shop
         item = new ItemStack(Material.CHEST);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eZum Shop");
-        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
-        lore.add("§fkommst du zum SkyBlock-Shop.");
+        meta.setDisplayName("Â§eZum Shop");
+        lore.add("Â§fÂ§l> Â§fWenn du auf diesen Gegenstand klickst,");
+        lore.add("Â§fkommst du zum SkyBlock-Shop.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -87,9 +87,9 @@ public class Inventories {
         //3 Item - Mitspieler
         item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eMitspieler");
-        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
-        lore.add("§fbekommst du all deine Mitspieler angezeigt.");
+        meta.setDisplayName("Â§eMitspieler");
+        lore.add("Â§fÂ§l> Â§fWenn du auf diesen Gegenstand klickst,");
+        lore.add("Â§fbekommst du all deine Mitspieler angezeigt.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -97,9 +97,9 @@ public class Inventories {
         //4 Item - Challenges
         item = new ItemStack(Material.BOOK);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eChallenges");
-        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
-        lore.add("§fbekommst du alle möglichen Challenges aufgelistet.");
+        meta.setDisplayName("Â§eChallenges");
+        lore.add("Â§fÂ§l> Â§fWenn du auf diesen Gegenstand klickst,");
+        lore.add("Â§fbekommst du alle mÃ¶glichen Challenges aufgelistet.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
@@ -107,20 +107,14 @@ public class Inventories {
         //5 Item - Biome
         item = new ItemStack(Material.SAPLING);
         meta = item.getItemMeta();
-        meta.setDisplayName("§eBiome");
-        lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
-        lore.add("§fkommst du zu einer Auswahl von Biomen,");
-        lore.add("§fdie du für deine Insel definieren kannst.");
+        meta.setDisplayName("Â§eBiome");
+        lore.add("Â§fÂ§l> Â§fWenn du auf diesen Gegenstand klickst,");
+        lore.add("Â§fkommst du zu einer Auswahl von Biomen,");
+        lore.add("Â§fdie du fÃ¼r deine Insel definieren kannst.");
         meta.setLore(lore);
         lore.clear();
         item.setItemMeta(meta);
         inv.setItem(4, item);
-
-
-
-
-
-
         return inv;
     }
 
