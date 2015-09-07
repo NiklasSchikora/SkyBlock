@@ -342,6 +342,11 @@ public class IslandManager {
     }
 
 
+    public void test() {
+        System.out.println("Reinitialised Git Repo, TEST");
+    }
+
+
     public static String getIsland(String uuid) {
         File players = new File("plugins/SkyBlock", "players.yml");
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(players);
