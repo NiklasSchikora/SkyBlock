@@ -16,3 +16,6 @@ commands:
   version:
     description: SkyBlock version
     aliases: [sversion, sv, skyblockversion]
+
+  fly:
+    description: Fly Command

@@ -33,7 +33,7 @@ public class CommandIsland implements CommandExecutor{
             Player p  = (Player) cs;
             String uuid = p.getUniqueId().toString();
             if(p.hasPermission("SkyBlock.use")) {
-                if(!IslandManager.hasIsland(uuid)) {
+                if(!IslandManager.hasIsland(uuid) && args.length == 0) {
                     p.openInventory(Inventories.startInv());
                 } else {
                     IslandManager manager = new IslandManager();
@@ -45,8 +45,9 @@ public class CommandIsland implements CommandExecutor{
                     } else if(args[0].equalsIgnoreCase("sethome")) {
                         File file = new File("plugins/SkyBlock/Islands", IslandManager.getIsland(uuid) + ".yml");
                         FileConfiguration cfg  = YamlConfiguration.loadConfiguration(file);
+                        String ownerUUID = cfg.getString("Island.Owner");
                         System.out.println(manager.getIsland(uuid));
-                        if(manager.isOwner(uuid)) {
+                        if(uuid.equalsIgnoreCase(ownerUUID)) {
                             if (p.getWorld().getName().equalsIgnoreCase("Skyworld")) {
                                 if (manager.isInOwnRegion(p)) {
                                     Location loc = p.getLocation();
@@ -149,14 +150,19 @@ public class CommandIsland implements CommandExecutor{
                                 if(ownerP != null) {
                                     String ownerUUID = ownerP.getUniqueId().toString();
                                     manager.addPlayerToRegion(ownerUUID, uuid);
-                                    manager.addPlayerToIslandConfig(ownerUUID, uuid);
+                                    manager.addPlayerToIslandConfig(ownerUUID, uuid, p.getName());
                                     manager.addPlayerToPlayerdata(uuid, ownerUUID);
+
+                                    p.sendMessage(Messages.prefix + Messages.SkyBlock_Invite_Accepted_Sender);
+                                    ownerP.sendMessage(Messages.prefix + Messages.SkyBlock_Invite_Accepted_Inviter);
                                 } else {
                                     p.sendMessage(Messages.prefix + Messages.noplayer);
                                 }
                             } else {
                                 p.sendMessage(Messages.prefix + Messages.SkyBlock_No_OpenInvite);
                             }
+                        } else {
+                            p.sendMessage(Messages.prefix + " Du befindest dich noch auf einer Insel. Verlasse/Lösache diese um einer anderen beizutreten!");
                         }
                     } else if (args[0].equalsIgnoreCase("deny")) {
                         if(invites.containsKey(p.getName())) {
@@ -175,10 +181,6 @@ public class CommandIsland implements CommandExecutor{
                                 } else {
                                     p.sendMessage(Messages.prefix + Messages.SkyBlock_Is_InRegion);
                                 }
-
-
-
-
                             } else {
                                 p.sendMessage(Messages.prefix + Messages.SkyBlock_Is_Owner);
                             }

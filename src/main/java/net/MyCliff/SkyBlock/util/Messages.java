@@ -20,6 +20,8 @@ public class Messages {
     public static String SkyBlock_No_OpenInvite = " Du hast keine offene Einladung!";
     public static String SkyBlock_Invite_Declined_Inviter = " hat deine Einladung abgelehnt!";
     public static String SkyBlock_Invite_Declined_Sender = " Du hast die Einladung von %p abgelehnt!";
+    public static String SkyBlock_Invite_Accepted_Sender = " Du hast die Einladung von %p angenommen!";
+    public static String SkyBlock_Invite_Accepted_Inviter = " hat deine Einladung angenommen!";
     public static String SkyBlock_NoIsland = " Du besitzt keine Insel";
     public static String Fly_On = " Du hast den Flugmodus aktiviert!";
     public static String Fly_Off = " Du hast den Flugmodus deaktiviert!";
