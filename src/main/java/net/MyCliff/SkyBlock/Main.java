@@ -1,25 +1,26 @@
 package net.MyCliff.SkyBlock;
 
-import java.io.File;
-import java.lang.reflect.Field;
-
 import net.MyCliff.SkyBlock.commands.CommandFly;
 import net.MyCliff.SkyBlock.commands.CommandIsland;
 import net.MyCliff.SkyBlock.commands.CommandVersion;
 import net.MyCliff.SkyBlock.commands.CommandVillager;
-import net.MyCliff.SkyBlock.listener.InventoryClickManager;
+import net.MyCliff.SkyBlock.listener.*;
 import net.MyCliff.SkyBlock.manager.IslandManager;
 import net.MyCliff.SkyBlock.util.Messages;
-
 import net.MyCliff.SkyBlock.villagershop.VillagerHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+
 
 public class Main extends JavaPlugin {
+
+
+    public static HashMap<String, String> editing = new HashMap<String, String>();
 
 	/*
 	 * Created by Niklas Schikora on 28.06.2015
@@ -91,6 +92,10 @@ public class Main extends JavaPlugin {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new InventoryClickManager(), this);
         pm.registerEvents(new VillagerHandler(), this);
+        pm.registerEvents(new PlayerManagementListener(), this);
+        pm.registerEvents(new DeleteListener(), this);
+        pm.registerEvents(new JoinListener(), this);
+        pm.registerEvents(new BiomeListener(), this);
     }
 
 

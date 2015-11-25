@@ -1,65 +1,67 @@
 package net.MyCliff.SkyBlock.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Inventories {
 
 
-    public static Inventory startInv() {
-        Inventory inv = Bukkit.createInventory(null, 27, "§eSkyBlock");
-        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE,1 ,(short) 15);
+    public static Inventory Island(Player p) {
+        Inventory inv = Bukkit.createInventory(null, 9, "§f§lSkyBlock §7§l»");
+        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
         ItemMeta glassItemMeta = glass.getItemMeta();
         glassItemMeta.setDisplayName(" ");
         glass.setItemMeta(glassItemMeta);
-        for(int i = 0; i< 27; i++) {
+        for (int i = 0; i < 9; i++) {
             inv.setItem(i, glass);
         }
-        ItemStack item;
-        ItemMeta meta;
-        List<String> lore = new ArrayList<String>();
-        item = new ItemStack(Material.BOOK);
-        meta = item.getItemMeta();
-        meta.setDisplayName("§eWas ist SkyBlock?");
-        lore.add("§f§l> §fHier erfährst du, um was es in SkyBlock geht");
-        lore.add("§fund was deine Ziele sind.");
-        meta.setLore(lore);
-        lore.clear();
-        item.setItemMeta(meta);
-        inv.setItem(10, item);
-
-        item = new ItemStack(Material.SAPLING);
-        meta = item.getItemMeta();
-        meta.setDisplayName("§eStarte dein eigenes Abenteuer!");
-        lore.add("§f§l> §fErstelle deine eigene Insel und");
-        lore.add("§fstelle dich dem Abenteuer!");
-        meta.setLore(lore);
-        lore.clear();
-        item.setItemMeta(meta);
-        inv.setItem(13, item);
-
-        item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        meta = item.getItemMeta();
-        meta.setDisplayName("§eSpiele mit Freunden!");
-        lore.add("§f§l> §fKlicke auf dieses Item,");
-        lore.add("§fum mehr Informationen zu bekommen.");
-        meta.setLore(lore);
-        lore.clear();
-        item.setItemMeta(meta);
-        inv.setItem(16, item);
-
+            //Informationen zum Party-System
+            ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+            SkullMeta skullmeta = (SkullMeta) skull.getItemMeta();
+            skullmeta.setDisplayName("§9§lSpiele mit Freunden!");
+            skullmeta.setOwner(p.getName());
+            List<String> skulllore = new ArrayList<String>();
+            skulllore.add("§f§l» §fKlicke hier, um mehr Informationen über");
+            skulllore.add("§fdas Party-System zu bekommen.");
+            skullmeta.setLore(skulllore);
+            skull.setItemMeta(skullmeta);
+            inv.setItem(1, skull);
+            //Mehr Informationen
+            ItemStack paper = new ItemStack(Material.PAPER, 1);
+            ItemMeta papermeta = paper.getItemMeta();
+            papermeta.setDisplayName("§7§lWas ist SkyBlock?");
+            List<String> paperlore = new ArrayList<String>();
+            paperlore.add("§f§l» §fKlicke hier, um mehr Informationen über");
+            paperlore.add("§fden Spielmodus §7§oSkyBlock §fzu bekommen.");
+            papermeta.setLore(paperlore);
+            paper.setItemMeta(papermeta);
+            inv.setItem(7, paper);
+            //Eigene Insel
+            ItemStack grass = new ItemStack(Material.GRASS, 1);
+            ItemMeta grassmeta = grass.getItemMeta();
+            grassmeta.setDisplayName("§2§lStarte dein Abenteuer!");
+            List<String> grasslore = new ArrayList<String>();
+            grasslore.add("§f§l» §fKlicke hier, um deine eigene Insel");
+            grasslore.add("§fzu erstellen..");
+            grasslore.add(" ");
+            grasslore.add("§fDu kannst natürlich auch später noch Spieler");
+            grasslore.add("§fauf deine Insel einladen.");
+            grassmeta.setLore(grasslore);
+            grass.setItemMeta(grassmeta);
+            inv.setItem(4, grass);
         return inv;
     }
 
 
-    public static Inventory islandMenue(Player p) {
+    public static Inventory islandMenue() {
         Inventory inv = Bukkit.createInventory(null, 18, "Insel-Menü");
         ItemStack item;
         ItemMeta meta;
@@ -105,7 +107,7 @@ public class Inventories {
         item.setItemMeta(meta);
         inv.setItem(3, item);
         //5 Item - Biome
-        item = new ItemStack(Material.SAPLING);
+        item = new ItemStack(Material.MAP);
         meta = item.getItemMeta();
         meta.setDisplayName("§eBiome");
         lore.add("§f§l> §fWenn du auf diesen Gegenstand klickst,");
@@ -115,9 +117,46 @@ public class Inventories {
         lore.clear();
         item.setItemMeta(meta);
         inv.setItem(4, item);
+
         return inv;
     }
 
+
+    public static Inventory getBiomInv() {
+        Inventory inv = Bukkit.createInventory(null, 45, "§f§lSkyBlock §7§l» §e§lBiome");
+        List<String> lore = new ArrayList<String>();
+
+        //Item-Normal
+        lore.add("§7§l» §fSetze das Biom");
+        lore.add("§fdeiner Insel auf");
+        lore.add("§f§lNormal");
+        inv.setItem(11, getItemStack(Material.GRASS, 1, (byte) 1, "§6§lBiom §7§l» §5Normal", lore));
+        lore.clear();
+        //Item-Moor
+        lore.add("§7§l» §fSetze das Biom");
+        lore.add("§fdeiner Insel auf");
+        lore.add("§f§lMoor");
+        inv.setItem(12, getItemStack(Material.MYCEL, 1, (byte) 0, "§6§lBiom §7§l» §5Moor", lore));
+        lore.clear();
+        //Item-Snow
+        lore.add("§7§l» §fSetze das Biom");
+        lore.add("§fdeiner Insel auf");
+        lore.add("§f§lSchnee");
+        inv.setItem(13, getItemStack(Material.SNOW, 1, (byte) 0, "§6§lBiom §7§l» §5Schnee", lore));
+        lore.clear();
+
+        return inv;
+    }
+
+
+    public static ItemStack getItemStack(Material material, int amount, byte damage, String name, List<String> lore) {
+        ItemStack item = new ItemStack(material, amount, damage);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
 
 
 }
