@@ -4,7 +4,9 @@ import net.MyCliff.SkyBlock.Main;
 import net.MyCliff.SkyBlock.manager.IslandManager;
 import net.MyCliff.SkyBlock.util.Inventories;
 import net.MyCliff.SkyBlock.util.Messages;
+import net.MyCliff.SkyBlock.util.TitleUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -187,6 +189,7 @@ public class PlayerManagementListener implements Listener {
                             Player ifon = Bukkit.getPlayerExact(name);
                             if (ifon != null) {
                                 ifon.sendMessage(Messages.prefix + " Du wurdest in die Gruppe Verwalter gesetzt!");
+                                TitleUtil.sendActionbar(ifon, "Du wurdest in die Gruppe Verwalter gesetzt", ChatColor.LIGHT_PURPLE);
                             }
                             iscfg.set("Island.Rank.Members", members);
                             iscfg.set("Island.Rank.Verwalter", verwalter);
@@ -195,12 +198,22 @@ public class PlayerManagementListener implements Listener {
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
+                            TitleUtil.sendActionbar(p, "Du hast den Spieler in die Gruppe Verwalter gesetzt", ChatColor.LIGHT_PURPLE);
                         } else {
                             p.sendMessage(Messages.prefix + " Der Spieler " + name + " ist bereits in der Gruppe Mitglied!");
                         }
                         e.getView().close();
                     } else if (e.getCurrentItem().getType().equals(Material.GOLD_HELMET)) {
+                        if(IslandManager.isOwner(p.getUniqueId().toString())) {
 
+
+
+                        } else {
+                            p.sendMessage(Messages.prefix + " Du musst Besitzer sein um diese Position zu übertragen.");
+                        }
+
+                    } else if(e.getCurrentItem().getType().equals(Material.BARRIER)) {
+                        p.openInventory(Inventories.islandMenue());
                     }
                     e.setCancelled(true);
                 }

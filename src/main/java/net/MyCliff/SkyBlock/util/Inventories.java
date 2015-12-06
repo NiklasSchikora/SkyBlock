@@ -122,32 +122,6 @@ public class Inventories {
     }
 
 
-    public static Inventory getBiomInv() {
-        Inventory inv = Bukkit.createInventory(null, 45, "§f§lSkyBlock §7§l» §e§lBiome");
-        List<String> lore = new ArrayList<String>();
-
-        //Item-Normal
-        lore.add("§7§l» §fSetze das Biom");
-        lore.add("§fdeiner Insel auf");
-        lore.add("§f§lNormal");
-        inv.setItem(11, getItemStack(Material.GRASS, 1, (byte) 1, "§6§lBiom §7§l» §5Normal", lore));
-        lore.clear();
-        //Item-Moor
-        lore.add("§7§l» §fSetze das Biom");
-        lore.add("§fdeiner Insel auf");
-        lore.add("§f§lMoor");
-        inv.setItem(12, getItemStack(Material.MYCEL, 1, (byte) 0, "§6§lBiom §7§l» §5Moor", lore));
-        lore.clear();
-        //Item-Snow
-        lore.add("§7§l» §fSetze das Biom");
-        lore.add("§fdeiner Insel auf");
-        lore.add("§f§lSchnee");
-        inv.setItem(13, getItemStack(Material.SNOW, 1, (byte) 0, "§6§lBiom §7§l» §5Schnee", lore));
-        lore.clear();
-
-        return inv;
-    }
-
 
     public static ItemStack getItemStack(Material material, int amount, byte damage, String name, List<String> lore) {
         ItemStack item = new ItemStack(material, amount, damage);
@@ -157,6 +131,8 @@ public class Inventories {
         item.setItemMeta(meta);
         return item;
     }
+
+
 
 
 }

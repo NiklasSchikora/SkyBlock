@@ -337,6 +337,7 @@ public class IslandManager {
         islandConfig.addDefault("Island.Home.Yaw", getNextIsland().getYaw());
         islandConfig.addDefault("Island.Home.Pitch", getNextIsland().getPitch());
         islandConfig.addDefault("Island.Rank.Verwalter", null);
+        islandConfig.addDefault("Island.Biome", "FORREST");
         islandConfig.options().copyDefaults(true);
         try {
             islandConfig.save(island);

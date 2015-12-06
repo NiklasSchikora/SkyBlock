@@ -82,7 +82,7 @@ public class Main extends JavaPlugin {
 
 
     public void registerCommands() {
-        this.getCommand("insel").setExecutor(new CommandIsland());
+        this.getCommand("insel").setExecutor(new CommandIsland(this));
         this.getCommand("villager").setExecutor(new CommandVillager());
         this.getCommand("version").setExecutor(new CommandVersion());
         this.getCommand("fly").setExecutor(new CommandFly());

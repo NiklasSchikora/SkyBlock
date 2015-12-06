@@ -1,6 +1,6 @@
 name: SkyBlock
 version: 1.0
-authors: [Cheftoaster, Monty]
+author: Cheftoaster
 depend: [WorldGuard, WorldEdit]
 
 main: net.MyCliff.SkyBlock.Main

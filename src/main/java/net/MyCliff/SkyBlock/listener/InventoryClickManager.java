@@ -4,9 +4,12 @@ import com.sk89q.worldguard.protection.flags.InvalidFlagFormat;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.MyCliff.SkyBlock.Main;
 import net.MyCliff.SkyBlock.manager.IslandManager;
+import net.MyCliff.SkyBlock.util.BiomManager;
 import net.MyCliff.SkyBlock.util.Inventories;
 import net.MyCliff.SkyBlock.util.Messages;
+import net.MyCliff.SkyBlock.util.TitleUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -51,7 +54,8 @@ public class InventoryClickManager implements Listener {
                         IslandManager.updateNextIs();
                         p.teleport(IslandManager.getIslandLocation(uuid));
                         IslandManager.setChest(IslandManager.getIslandLocation(uuid), p);
-
+                        TitleUtil.sendTitle("Wilkommen auf deiner Insel!", p, ChatColor.RED);
+                        TitleUtil.sendSubTitle("Benutze /is um das Insel-Menü aufzurufen", p, ChatColor.WHITE);
                     }
                     e.setCancelled(true);
                 } else if (e.getCurrentItem().getType().equals(Material.PAPER)) {
@@ -61,7 +65,7 @@ public class InventoryClickManager implements Listener {
                 e.setCancelled(true);
             } else if (e.getInventory().getTitle().equalsIgnoreCase("Insel-Menü")) {
                 if(e.getInventory() != null) {
-                    if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
+                    if (e.getCurrentItem() != null || e.getCurrentItem().getType() != Material.AIR) {
                         if (e.getCurrentItem().getType().equals(Material.BED)) {
                             Bukkit.dispatchCommand(p, "is home");
                         } else if (e.getSlot() == 2) {
@@ -114,7 +118,7 @@ public class InventoryClickManager implements Listener {
                         } else if(e.getCurrentItem().getType().equals(Material.MAP)) {
                             IslandManager manager = new IslandManager();
                             if(manager.isOwner(uuid) || manager.isVerwalter(uuid)) {
-                                p.openInventory(Inventories.getBiomInv());
+                                p.openInventory(BiomManager.biomechange(p));
                             } else {
                                 e.getView().close();
                                 p.sendMessage(Messages.prefix + " Du hast keine Berechtigung das Biom zu ändern!");

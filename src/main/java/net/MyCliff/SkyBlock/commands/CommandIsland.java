@@ -1,5 +1,8 @@
 package net.MyCliff.SkyBlock.commands;
 
+import net.MyCliff.SkyBlock.Main;
+import net.MyCliff.SkyBlock.level.LevelTask;
+import net.MyCliff.SkyBlock.level.LevelUtil;
 import net.MyCliff.SkyBlock.manager.IslandManager;
 import net.MyCliff.SkyBlock.util.Inventories;
 import net.MyCliff.SkyBlock.util.Messages;
@@ -26,6 +29,10 @@ import java.util.List;
 public class CommandIsland implements CommandExecutor{
 
 
+    private Main main;
+    public CommandIsland(Main plugin) {
+        this.main = plugin;
+    }
 
 
     public HashMap<String, String> invites = new HashMap<String, String>();
@@ -223,6 +230,37 @@ public class CommandIsland implements CommandExecutor{
                         choice.setItem(4, description);
 
                         p.openInventory(choice);
+                    } else if(args[0].equalsIgnoreCase("level")) {
+                        String islandID = IslandManager.getIslandID(uuid);
+                        File file = new File("plugins/SkyBlock", "times.yml");
+                        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+                        if(!file.exists()) {
+                            try {
+                                file.createNewFile();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        long systime = System.currentTimeMillis();
+                        long ptime = cfg.getLong(islandID);
+                        long settime = systime + 6000;
+                        if(ptime >= systime) {
+                            p.sendMessage("Dein Level: " + LevelUtil.getLevel(uuid));
+                            p.sendMessage("Dein Prozess: " + LevelUtil.getProcess(islandID));
+                        } else {
+                            LevelTask task = new LevelTask(main);
+                            task.getLevelTask(uuid, p);
+                            p.sendMessage("Dein Level: " + LevelUtil.getLevel(uuid));
+                            p.sendMessage("Dein Prozess: " + LevelUtil.getProcess(islandID));
+                            cfg.set(islandID, settime);
+                            try {
+                                cfg.save(file);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
                     }
                 }
             } else {
@@ -232,6 +270,13 @@ public class CommandIsland implements CommandExecutor{
         return false;
     }
 
+
+    /*
+    skds
+
+
+
+     */
 
 
 
